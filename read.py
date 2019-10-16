@@ -9,6 +9,7 @@
 
 import sys
 
+iden = []
 init = []
 priority = []
 processor = []
@@ -17,15 +18,19 @@ printer = []
 scanner = []
 modem = []
 disc = []
+blocks = 0
+segocup = 0
 
 def readProcesses():
 	i = 0
 	fileProcesses = sys.argv[1]
+	fileExecution = sys.argv[2]
 	f = open(fileProcesses, "r")
 	fl = f.readlines()
 	size = len(fl)
 	while i < size:
 		x = fl[i].split(',')
+		iden.append(i)
 		init.append(int(x[0]))
 		priority.append(int(x[1]))
 		processor.append(int(x[2]))
@@ -36,6 +41,16 @@ def readProcesses():
 		disc.append(int(x[7]))
 		i += 1
 
+	f.close()
+	f = open(fileExecution, "r")
+	fl = f.readlines()
+	blocks = int(fl[0])
+	segocup = int(fl[1])
+	print(blocks)
+	print(segocup)
+
+	print("Identificador do processo")
+	print(iden)
 	print("Vetor de tempo de inicialização: ")
 	print(init)
 	print("Vetor de prioridade: ")
