@@ -25,7 +25,7 @@ def readProcesses():
 	fl = f.readlines()
 	size = len(fl)
 	while i < size:
-		x = fl[i].split(', ')
+		x = fl[i].split(',')
 		init.append(int(x[0]))
 		priority.append(int(x[1]))
 		processor.append(int(x[2]))
@@ -53,6 +53,4 @@ def readProcesses():
 	print("Vetor de código do disco: ")
 	print(disc)
 			
-
-if __name__== "__main__":
-  readProcesses()
+readProcesses()
