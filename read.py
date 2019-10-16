@@ -12,17 +12,19 @@ import sys
 class Reader:
 
 	def __init__(self):
-		self.iden = []
-		self.init = []
-		self.priority = []
-		self.processor = []
-		self.memory = []
-		self.printer = []
-		self.scanner = []
-		self.modem = []
-		self.disc = []
-		self.blocks = 0
-		self.segocup = 0
+		self.iden = []				# <ID_processo>
+		self.init = []				# <tempo de inicialização>
+		self.priority = []			# <prioridade>
+		self.processor = []			# <tempo de processador>
+		self.memory = []			# <blocos em memória>
+		self.printer = []			# <númerocódigo da impressora requisitada>
+		self.scanner = []			# <requisição do scanner>
+		self.modem = []				# <requisição do modem>
+		self.disc = []				# <númerocódigo do disco>
+		self.blocks = 0				# <quantidade de blocos do disco>
+		self.segocup = 0			# <quantidade de segmentos ocupados no disco>
+		self.files = []				# <arquivos em disco>
+		self.operations = []		# <operações a serem efetivadas>
 
 
 	def readProcesses(self):
@@ -48,12 +50,29 @@ class Reader:
 		f.close()
 		f = open(fileExecution, "r")
 		fl = f.readlines()
-		blocks = int(fl[0])
-		segocup = int(fl[1])
-		print(blocks)
-		print(segocup)
+		self.blocks = int(fl[0])
+		self.segocup = int(fl[1])
+		i = 2
+		while i < (2 + self.segocup):
+			self.files.append(fl[i])
+			i += 1
+		size = len(fl)
+		while i < size:
+			self.operations.append(fl[i])
+			i += 1
 
-		print("Identificador do processo")
+		f.close()
+
+		print("Quantidade de blocos do disco: ")
+		print(self.blocks)
+		print("Quantidade de segmentos ocupados do disco: ")
+		print(self.segocup)
+		print("Arquivos em disco: ")
+		print(self.files)
+		print("Operações a serem efetivadas: ")
+		print(self.operations)
+
+		print("Identificador do processo: ")
 		print(self.iden)
 		print("Vetor de tempo de inicialização: ")
 		print(self.init)
