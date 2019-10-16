@@ -7,6 +7,8 @@
 # <requisição do modem>
 # <númerocódigo do disco>
 
+import sys
+
 init = []
 priority = []
 processor = []
@@ -18,7 +20,8 @@ disc = []
 
 def readProcesses():
 	i = 0
-	f = open("processes.txt", "r")
+	fileProcesses = sys.argv[1]
+	f = open(fileProcesses, "r")
 	fl = f.readlines()
 	size = len(fl)
 	while i < size:
