@@ -1,5 +1,5 @@
-import read
+import dispatcher
 
-reader = read.Reader()
+disp = dispatcher.Dispatcher()
 
-reader.readProcesses()
+disp.dispatch()

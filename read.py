@@ -1,12 +1,3 @@
-# <tempo de inicialização>
-# <prioridade>
-# <tempo de processador>
-# <blocos em memória>
-# <númerocódigo da impressora requisitada>
-# <requisição do scanner>
-# <requisição do modem>
-# <númerocódigo do disco>
-
 import sys
 
 class Reader:
@@ -25,7 +16,6 @@ class Reader:
 		self.segocup = 0			# <quantidade de segmentos ocupados no disco>
 		self.files = []				# <arquivos em disco>
 		self.operations = []		# <operações a serem efetivadas>
-
 
 	def readProcesses(self):
 		i = 0
@@ -62,6 +52,8 @@ class Reader:
 			i += 1
 
 		f.close()
+
+	def printProcesses(self):	
 
 		print("Quantidade de blocos do disco: ")
 		print(self.blocks)
