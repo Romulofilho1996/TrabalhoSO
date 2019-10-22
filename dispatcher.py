@@ -1,4 +1,5 @@
 import read
+import disc
 
 class Dispatcher:
 
@@ -6,6 +7,7 @@ class Dispatcher:
 		self.reader = read.Reader()
 		self.reader.readProcesses()
 		self.reader.printProcesses()
+		self.disc = disc.Disc(self.reader.blocks, self.reader.segocup, self.reader.files)
 
 	def dispatch(self):
 		i = 0
@@ -24,3 +26,5 @@ class Dispatcher:
 			print("Filas: ", self.reader.fila.filaReal[i].priority)
 			print("\n")
 			i += 1
+
+		self.disc.inicializaDisco()
