@@ -1,4 +1,6 @@
 import sys
+import process
+import filas
 
 class Reader:
 
@@ -16,8 +18,10 @@ class Reader:
 		self.segocup = 0			# <quantidade de segmentos ocupados no disco>
 		self.files = []				# <arquivos em disco>
 		self.operations = []		# <operações a serem efetivadas>
+		self.fila = []
 
 	def readProcesses(self):
+		self.fila = filas.Filas()
 		i = 0
 		fileProcesses = sys.argv[1]
 		fileExecution = sys.argv[2]
@@ -35,6 +39,15 @@ class Reader:
 			self.scanner.append(int(x[5]))
 			self.modem.append(int(x[6]))
 			self.disc.append(int(x[7]))
+			proc = process.Process(self.iden[i], self.init[i], self.priority[i], self.processor[i], self.memory[i], self.printer[i], self.scanner[i], self.modem[i], self.disc[i])
+			if(proc.priority == 0):
+				self.fila.filaReal.append(proc)
+			elif(proc.priority == 1):
+				self.fila.fila1.append(proc)
+			elif(proc.priority == 2):
+				self.fila.fila2.append(proc)
+			elif(proc.priority == 3):
+				self.fila.fila3.append(proc)
 			i += 1
 
 		f.close()

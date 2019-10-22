@@ -5,6 +5,7 @@ class Dispatcher:
 	def __init__(self):
 		self.reader = read.Reader()
 		self.reader.readProcesses()
+		self.reader.printProcesses()
 
 	def dispatch(self):
 		i = 0
@@ -20,5 +21,6 @@ class Dispatcher:
 			print("scanners:", self.reader.scanner[i])
 			print("modems:", self.reader.modem[i])
 			print("drivers:", self.reader.disc[i])
+			print("Filas: ", self.reader.fila.filaReal[i].priority)
 			print("\n")
 			i += 1
