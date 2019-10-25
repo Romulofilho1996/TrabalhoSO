@@ -1,10 +1,9 @@
 import sys
 import process
-import filas
 
 class Reader:
 
-	def __init__(self):
+	def __init__(self, filas):
 		self.iden = []				# <ID_processo>
 		self.init = []				# <tempo de inicialização>
 		self.priority = []			# <prioridade>
@@ -18,10 +17,9 @@ class Reader:
 		self.segocup = 0			# <quantidade de segmentos ocupados no disco>
 		self.files = []				# <arquivos em disco>
 		self.operations = []		# <operações a serem efetivadas>
-		self.fila = []
+		self.fila = filas
 
 	def readProcesses(self):
-		self.fila = filas.Filas()
 		i = 0
 		fileProcesses = sys.argv[1]
 		fileExecution = sys.argv[2]

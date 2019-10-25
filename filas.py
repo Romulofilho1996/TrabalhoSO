@@ -1,14 +1,12 @@
-import memory
-
 class Filas:
 
-	def __init__(self):
+	def __init__(self, mem):
 		self.filaGeral = []
 		self.filaReal = []
 		self.fila1 = []
 		self.fila2 = []
 		self.fila3 = []
-		self.memory = memory.Memory()
+		self.memory = mem
 
 	def preencheMemoria(self, pos, blocks, priority):
 		if(priority == 0):

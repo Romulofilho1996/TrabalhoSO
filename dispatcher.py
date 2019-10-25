@@ -3,8 +3,8 @@ import disc
 
 class Dispatcher:
 
-	def __init__(self):
-		self.reader = read.Reader()
+	def __init__(self, filas):
+		self.reader = read.Reader(filas)
 		self.reader.readProcesses()
 		self.reader.printProcesses()
 		self.disc = disc.Disc(self.reader.blocks, self.reader.segocup, self.reader.files)
