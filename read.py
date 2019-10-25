@@ -40,16 +40,12 @@ class Reader:
 			self.modem.append(int(x[6]))
 			self.disc.append(int(x[7]))
 			proc = process.Process(self.iden[i], self.init[i], self.priority[i], self.processor[i], self.memory[i], self.printer[i], self.scanner[i], self.modem[i], self.disc[i])
-			if(proc.priority == 0):
-				self.fila.filaReal.append(proc)
-			elif(proc.priority == 1):
-				self.fila.fila1.append(proc)
-			elif(proc.priority == 2):
-				self.fila.fila2.append(proc)
-			elif(proc.priority == 3):
-				self.fila.fila3.append(proc)
+			if((proc.priority == 0 and proc.printer == 0 and proc.scanner == 0 and proc.modem == 0 and proc.disc == 0 and proc.memory <= 64) or (proc.priority != 0 and proc.printer <= 2 and proc.scanner <= 1 and proc.modem <= 1 and proc.disc <= 2 and proc.memory <= 960)):
+				self.fila.filaGeral.append(proc)
+			else:
+				print("Processo ", i, " não pode ser executado por falta de recursos")
 			i += 1
-
+		self.fila.distribuiFilas()
 		f.close()
 		f = open(fileExecution, "r")
 		fl = f.readlines()

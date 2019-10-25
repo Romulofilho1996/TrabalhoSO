@@ -23,7 +23,6 @@ class Dispatcher:
 			print("scanners:", self.reader.scanner[i])
 			print("modems:", self.reader.modem[i])
 			print("drivers:", self.reader.disc[i])
-			print("Filas: ", self.reader.fila.filaReal[i].priority)
 			print("\n")
 			i += 1
 
