@@ -4,7 +4,8 @@ import disc
 class Dispatcher:
 
 	def __init__(self, filas):
-		self.reader = read.Reader(filas)			# cria um objeto de leitura dos arquivos
+		self.filas = filas
+		self.reader = read.Reader(self.filas)			# cria um objeto de leitura dos arquivos
 		self.reader.readProcesses()
 		self.reader.printProcesses()
 		self.disc = disc.Disc(self.reader.blocks, self.reader.segocup, self.reader.files)			# cria um objeto de disco de acordo com o numero de blocos do disco, de segmentos ocupados e com os arquivos
