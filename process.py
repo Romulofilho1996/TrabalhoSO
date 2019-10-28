@@ -11,3 +11,6 @@ class Process:
 		self.scanner = scanner
 		self.modem = modem
 		self.disc = disc
+
+	def get_init(self):
+		return self.init

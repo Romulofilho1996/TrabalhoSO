@@ -44,6 +44,9 @@ class Reader:
 			else:
 				print("Processo ", i, " não pode ser executado por falta de recursos")
 			i += 1
+		print("Fila geral antes: ", self.fila.filaGeral)
+		self.fila.filaGeral = sorted(self.fila.filaGeral, key = process.Process.get_init)
+		print("Fila geral aqui", self.fila.filaGeral)
 		self.fila.distribuiFilas()			# distribuímos os processos da fila geral para a sua devida fila de acordo com sua prioridade
 		print("Fila real: ", self.fila.filaReal)
 		f.close()
