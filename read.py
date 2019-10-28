@@ -44,11 +44,8 @@ class Reader:
 			else:
 				print("Processo ", i, " não pode ser executado por falta de recursos")
 			i += 1
-		print("Fila geral antes: ", self.fila.filaGeral)
 		self.fila.filaGeral = sorted(self.fila.filaGeral, key = process.Process.get_init)
-		print("Fila geral aqui", self.fila.filaGeral)
 		self.fila.distribuiFilas()			# distribuímos os processos da fila geral para a sua devida fila de acordo com sua prioridade
-		print("Fila real: ", self.fila.filaReal)
 		f.close()
 		f = open(fileExecution, "r")
 		fl = f.readlines()
@@ -62,7 +59,7 @@ class Reader:
 		while i < size:						# da linha 3 + (número de segmentos ocupados no disco) devemos enviar para a lista de arquivos ate a linha n enviamos os dados para a lista de operações
 			self.operations.append(fl[i])
 			i += 1
-
+		
 		f.close()
 
 	def printProcesses(self):	
