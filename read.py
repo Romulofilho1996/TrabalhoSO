@@ -6,6 +6,7 @@ class Reader:
 	def __init__(self, filas):
 		self.iden = []				# <ID_processo>
 		self.init = []				# <tempo de inicialização>
+		self.offset = []
 		self.priority = []			# <prioridade>
 		self.processor = []			# <tempo de processador>
 		self.memory = []			# <blocos em memória>
@@ -44,6 +45,7 @@ class Reader:
 				print("Processo ", i, " não pode ser executado por falta de recursos")
 			i += 1
 		self.fila.distribuiFilas()			# distribuímos os processos da fila geral para a sua devida fila de acordo com sua prioridade
+		print("Fila real: ", self.fila.filaReal)
 		f.close()
 		f = open(fileExecution, "r")
 		fl = f.readlines()

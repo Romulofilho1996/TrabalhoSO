@@ -30,6 +30,7 @@ class Filas:
 						break						# termina aqui o for, pois seguimos pelo algoritmo first-fit
 				if(flag == 1):
 					self.memory.preencheMemoria(pos, proc.memory, proc.priority)		# realiza a ocupação da memória 
+					proc.offset = pos
 					self.filaReal.append(proc)		# alocamos à fila real se tiver espaço para o processo
 					print("Memoria realtime: ", self.memory.realtime)
 				else:
@@ -48,6 +49,7 @@ class Filas:
 						break
 				if(flag == 1):
 					if(self.resources.checkResources(proc)):
+						proc.offset = pos
 						self.memory.preencheMemoria(pos, proc.memory, proc.priority)
 						self.fila1.append(proc)
 						print("Memoria usuario: ", self.memory.user)
@@ -70,6 +72,7 @@ class Filas:
 						break
 				if(flag == 1):
 					if(self.resources.checkResources(proc)):
+						proc.offset = pos
 						self.memory.preencheMemoria(pos, proc.memory, proc.priority)
 						self.fila2.append(proc)
 						print("Memoria usuario: ", self.memory.user)
@@ -92,6 +95,7 @@ class Filas:
 						break
 				if(flag == 1):
 					if(self.resources.checkResources(proc)):
+						proc.offset = pos
 						self.memory.preencheMemoria(pos, proc.memory, proc.priority)
 						self.fila3.append(proc)
 						print("Memoria usuario: ", self.memory.user)

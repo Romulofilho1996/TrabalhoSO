@@ -2,6 +2,7 @@ class Process:
 
 	def __init__(self,iden,init,priority,processor,memory,printer,scanner,modem,disc):
 		self.id = iden
+		self.offset = 0
 		self.init = init
 		self.priority = priority
 		self.processor = processor
