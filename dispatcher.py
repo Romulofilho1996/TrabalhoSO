@@ -62,11 +62,11 @@ class Dispatcher:
             break
           if(opTotal == proc.processor):
             self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+            self.filas.distribuiFilas()
             print ("P", proc.id, "SIGINT")
-            print(self.filas.memory.realtime)
             print("\n")
         j += 1
-        
+
   def exeggcuteAdd(self, id_proc, nome_arquivo, opTotal, numBlocos):
     pos = self.disc.checaDisco(numBlocos)
     if(pos == (-1)):

@@ -10,13 +10,15 @@ class Filas:
 		self.resources = resources
 
 	def distribuiFilas(self):				# função de distribuição das filas
-		while len(self.filaGeral) > 0:
+		j = len(self.filaGeral)
+		while j > 0:
 			flag = 0
 			pos = 0
 			cont = 0 		# posição inicial da possível área de alocação
 			tam = 0
 			proc = self.filaGeral.pop(0)			# buscando o primeiro elemento inserido na fila geral
 			if(proc.priority == 0):					# se for de tempo real
+				j -= 1
 				for i in self.memory.realtime:		# para cada posição do vetor da memória realtime
 					if(i == 0):						# se podemos alocar algo no bloco i = 0
 						cont += 1					# incrementamos o contador
@@ -32,10 +34,12 @@ class Filas:
 					self.memory.preencheMemoria(pos, proc.memory, proc.priority)		# realiza a ocupação da memória 
 					proc.offset = pos
 					self.filaReal.append(proc)		# alocamos à fila real se tiver espaço para o processo
-					print("Memoria realtime: ", self.memory.realtime)
+					#print("Fila real: ", self.filaReal)
+					#print("Memoria realtime: ", self.memory.realtime)
 				else:
 					self.filaGeral.append(proc)		# retornamos o processo para a fila geral, para algum momento futuro da execução em que esse possa ser executado
 			elif(proc.priority == 1):
+				j -= 1
 				for i in self.memory.user:
 					if(i == 0):
 						cont += 1
@@ -52,13 +56,14 @@ class Filas:
 						proc.offset = pos
 						self.memory.preencheMemoria(pos, proc.memory, proc.priority)
 						self.fila1.append(proc)
-						print("Memoria usuario: ", self.memory.user)
+						#print("Memoria usuario: ", self.memory.user)
 					else:
 						print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
 						self.filaGeral.append(proc)
 				else:
 					self.filaGeral.append(proc)
 			elif(proc.priority == 2):
+				j -= 1
 				for i in self.memory.user:
 					if(i == 0):
 						cont += 1
@@ -75,13 +80,14 @@ class Filas:
 						proc.offset = pos
 						self.memory.preencheMemoria(pos, proc.memory, proc.priority)
 						self.fila2.append(proc)
-						print("Memoria usuario: ", self.memory.user)
+						#print("Memoria usuario: ", self.memory.user)
 					else:
 						print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
 						self.filaGeral.append(proc)
 				else:
 					self.filaGeral.append(proc)
 			elif(proc.priority == 3):
+				j -= 1
 				for i in self.memory.user:
 					if(i == 0):
 						cont += 1
@@ -98,7 +104,7 @@ class Filas:
 						proc.offset = pos
 						self.memory.preencheMemoria(pos, proc.memory, proc.priority)
 						self.fila3.append(proc)
-						print("Memoria usuario: ", self.memory.user)
+						#print("Memoria usuario: ", self.memory.user)
 					else:
 						print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
 						self.filaGeral.append(proc)
