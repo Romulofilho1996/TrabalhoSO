@@ -61,7 +61,9 @@ class Dispatcher:
             print("\n")
             break
           if(opTotal == proc.processor):
+            self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
             print ("P", proc.id, "SIGINT")
+            print(self.filas.memory.realtime)
             print("\n")
         j += 1
 

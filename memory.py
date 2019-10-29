@@ -14,3 +14,14 @@ class Memory:
 			for x in range(blocks):
 				self.user[pos] = 1
 				pos += 1
+
+	def retiraMemoria(self, offset, blocks, priority):
+		if(priority == 0):
+			for x in range(blocks):
+				self.realtime[offset] = 0
+				offset += 1
+		else:
+			print("Posição user: ", pos)
+			for x in range(blocks):
+				self.user[offset] = 0
+				offset += 1
