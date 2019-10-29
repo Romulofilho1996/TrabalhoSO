@@ -66,7 +66,7 @@ class Dispatcher:
             print(self.filas.memory.realtime)
             print("\n")
         j += 1
-
+        
   def exeggcuteAdd(self, id_proc, nome_arquivo, opTotal, numBlocos):
     pos = self.disc.checaDisco(numBlocos)
     if(pos == (-1)):

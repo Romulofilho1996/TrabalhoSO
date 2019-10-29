@@ -5,8 +5,7 @@ class Reader:
 
 	def __init__(self, filas):
 		self.iden = []				# <ID_processo>
-		self.init = []				# <tempo de inicialização>
-		self.offset = []
+		self.init = []				# <tempo de inicialização>			
 		self.priority = []			# <prioridade>
 		self.processor = []			# <tempo de processador>
 		self.memory = []			# <blocos em memória>
