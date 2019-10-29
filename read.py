@@ -59,7 +59,7 @@ class Reader:
 		while i < size:						# da linha 3 + (número de segmentos ocupados no disco) devemos enviar para a lista de arquivos ate a linha n enviamos os dados para a lista de operações
 			self.operations.append(fl[i])
 			i += 1
-		
+
 		f.close()
 
 	def printProcesses(self):	
@@ -91,4 +91,3 @@ class Reader:
 		print(self.modem)
 		print("Vetor de código do disco: ")
 		print(self.disc)
-				

@@ -15,4 +15,3 @@ class Resources:
 			return True
 		else:
 			return False
-

@@ -4,11 +4,6 @@ class Dispatcher:
     self.filas = filas
     self.reader = reader     # cria um objeto de leitura dos arquivos
     self.reader.printProcesses()
-    # self.idProcesso = 
-    # self.codigoOperacao
-    # self.nomeArquivo
-    # self.numBlocos
-    # self.numOperacao
     self.disc = disc      # cria um objeto de disco de acordo com o numero de blocos do disco, de segmentos ocupados e com os arquivos
     self.disc.inicializaDisco()      # inicialização do objeto disco
 
@@ -40,26 +35,34 @@ class Dispatcher:
             if(cod_op == 0):
               numBlocos = int(op[3])
               numOperacao = int(op[4])
-              self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
             else:
               numOperacao = int(op[3])
-              self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
             while (opTotal != numOperacao):
+              opTotal += 1
               print ("P", proc.id, "instruction ", opTotal, " - SUCESSO CPU")
               print("\n")
-              opTotal += 1
               if(opTotal >= proc.processor):
+                opTotal += 1
                 print ("P", proc.id, "instruction ", opTotal, " - FALHA")
                 print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
                 print("\n")
+                j += 1
                 break
             else:  
               opTotal += 1
+            if(cod_op == 0 and opTotal <= proc.processor):
+              self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
+            elif(cod_op == 1 and opTotal <= proc.processor):
+              self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
           else:
+            opTotal += 1
             print ("P", proc.id, "instruction ", opTotal, " - FALHA")
             print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
             print("\n")
             break
+          if(opTotal == proc.processor):
+            print ("P", proc.id, "SIGINT")
+            print("\n")
         j += 1
 
   def exeggcuteAdd(self, id_proc, nome_arquivo, opTotal, numBlocos):
@@ -89,5 +92,3 @@ class Dispatcher:
       print("O processo ", id_proc, " não pode deletar o arquivo", nome_arquivo, " porque não existe esse arquivo")
       print("\n")
     #self.disc.printaDisco()
-
-
