@@ -68,7 +68,6 @@ class Dispatcher:
         j += 1
     while len(self.filas.fila1) > 0:
       j = 0
-      opTotal = 0
       proc = self.filas.fila1.pop(0)
       print("dispatcher =>")
       print("PID:", proc.id)
@@ -121,13 +120,13 @@ class Dispatcher:
             break
           if(proc.opTotal == proc.processor):
             self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+            self.filas.resources.freeResources(proc)
             self.filas.distribuiFilas()
             print ("P", proc.id, "SIGINT")
             print("\n")
         j += 1
     while len(self.filas.fila2) > 0:
       j = 0
-      opTotal = 0
       proc = self.filas.fila2.pop(0)
       print("dispatcher =>")
       print("PID:", proc.id)
@@ -180,6 +179,7 @@ class Dispatcher:
             break
           if(proc.opTotal == proc.processor):
             self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+            self.filas.resources.freeResources(proc)
             self.filas.distribuiFilas()
             print ("P", proc.id, "SIGINT")
             print("\n")
@@ -239,6 +239,7 @@ class Dispatcher:
             break
           if(proc.opTotal == proc.processor):
             self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+            self.filas.resources.freeResources(proc)
             self.filas.distribuiFilas()
             print ("P", proc.id, "SIGINT")
             print("\n")

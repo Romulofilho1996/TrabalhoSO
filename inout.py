@@ -15,3 +15,9 @@ class Resources:
 			return True
 		else:
 			return False
+
+	def freeResources(self, proc):
+		self.scanner += proc.scanner
+		self.printer += proc.scanner
+		self.modem += proc.scanner
+		self.sata += proc.scanner
