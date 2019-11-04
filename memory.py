@@ -21,7 +21,6 @@ class Memory:
 				self.realtime[offset] = 0
 				offset += 1
 		else:
-			print("Posição user: ", pos)
 			for x in range(blocks):
 				self.user[offset] = 0
 				offset += 1
