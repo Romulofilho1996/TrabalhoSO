@@ -1,3 +1,5 @@
+import time
+
 class Dispatcher:
 
   def __init__(self, filas, reader, disc):
@@ -9,6 +11,7 @@ class Dispatcher:
 
   def executa(self, filaEscolhida):
     while len(filaEscolhida) > 0:
+        time.sleep(2)
         j = 0
         flag = 0
         proc = filaEscolhida.pop(0)
@@ -81,7 +84,7 @@ class Dispatcher:
 
 
   def dispatch(self):
-    while len(self.filas.filaGeral) > 0 or len(self.filas.fila1) > 0 or len(self.filas.fila2) > 0 or len(self.filas.fila3) > 0:
+    while len(self.filas.filaGeral) > 0 or len(self.filas.filaReal) > 0 or len(self.filas.fila1) > 0 or len(self.filas.fila2) > 0 or len(self.filas.fila3) > 0:
       self.executa(self.filas.filaReal)
       self.executa(self.filas.fila1)  
       self.executa(self.filas.fila2)  
