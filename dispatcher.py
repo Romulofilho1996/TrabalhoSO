@@ -10,7 +10,7 @@ class Dispatcher:
   def executa(self, filaEscolhida):
     while len(filaEscolhida) > 0:
         j = 0
-        opTotal = 0
+        flag = 0
         proc = filaEscolhida.pop(0)
         print("dispatcher =>")
         print("PID:", proc.id)
@@ -25,7 +25,7 @@ class Dispatcher:
         print("\n")
         while(j < len(self.reader.operations)):
           if(int(self.reader.operations[j][0]) == proc.id):
-            if (opTotal < proc.processor):
+            if (proc.opTotal < proc.processor):
               op = self.reader.operations[j]
               op = op.split(',')
               id_proc = int(op[0])
@@ -37,47 +37,47 @@ class Dispatcher:
                 numOperacao = int(op[4])
               else:
                 numOperacao = int(op[3])
-              while (opTotal != numOperacao):
-                opTotal += 1
-                print ("P", proc.id, "instruction ", (opTotal - 1), " - SUCESSO CPU")
+              while (proc.opTotal != numOperacao):
+                proc.opTotal += 1
+                print ("P", proc.id, "instruction ", (proc.opTotal - 1), " - SUCESSO CPU")
                 print("\n")
-                if(opTotal >= proc.processor):
-                  opTotal += 1
-                  print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
+                if(proc.opTotal >= proc.processor):
+                  flag = 1
+                  proc.opTotal += 1
+                  print ("P", proc.id, "instruction ", (proc.opTotal - 1), " - FALHA")
                   print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
                   print("\n")
-                  print ("P", proc.id, "SIGINT")
+                  print ("P", proc.id, "return SIGINT")
                   print("\n")
                   j += 1
                   break
               else:  
-                opTotal += 1
-              if(cod_op == 0 and opTotal <= proc.processor):
-                self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
-              elif(cod_op == 1 and opTotal <= proc.processor):
-                self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
+                proc.opTotal += 1
+              if(cod_op == 0 and proc.opTotal <= proc.processor):
+                self.exeggcuteAdd(id_proc, nome_arquivo, proc.opTotal, numBlocos)
+              elif(cod_op == 1 and proc.opTotal <= proc.processor):
+                self.exeggcuteDelete(id_proc, cod_op, proc.opTotal, nome_arquivo)
             else:
-              opTotal += 1
-              print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
+              proc.opTotal += 1
+              print ("P", proc.id, "instruction ", (proc.opTotal - 1), " - FALHA")
               print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-              print("\n")
-              print ("P", proc.id, "SIGINT")
-              print("\n")
-              break
-            if(opTotal == proc.processor):
-              self.filas.resources.freeResources(proc)
-              self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
-              print ("P", proc.id, "SIGINT")
-              self.filas.distribuiFilas()
-              print("\n")    
-              break
+              print("\n")              
+              if(proc.opTotal == proc.processor):
+                flag = 1
+                self.filas.resources.freeResources(proc)
+                self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+                print ("P", proc.id, "return SIGINT")
+                self.filas.distribuiFilas()
+                print("\n")    
+                break
           j += 1
         else:
-          self.filas.resources.freeResources(proc)
-          self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
-          print ("P", proc.id, "SIGINT")
-          self.filas.distribuiFilas()
-          print("\n")    
+          if(flag == 0):
+            self.filas.resources.freeResources(proc)
+            self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+            print ("P", proc.id, "return SIGINT")
+            self.filas.distribuiFilas()
+            print("\n")    
 
 
   def dispatch(self):
