@@ -10,7 +10,6 @@ class Memory:
 				self.realtime[pos] = 1
 				pos += 1
 		else:
-			print("Posição user: ", pos)
 			for x in range(blocks):
 				self.user[pos] = 1
 				pos += 1
