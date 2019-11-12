@@ -64,6 +64,13 @@ class Dispatcher:
               print ("P", proc.id, "SIGINT")
               print("\n")
               break
+            if(opTotal == proc.processor):
+              self.filas.resources.freeResources(proc)
+              self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+              print ("P", proc.id, "SIGINT")
+              self.filas.distribuiFilas()
+              print("\n")    
+              break
           j += 1
         else:
           self.filas.resources.freeResources(proc)
