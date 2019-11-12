@@ -58,7 +58,7 @@ class Filas:
 						self.fila1.append(proc)
 						#print("Memoria usuario: ", self.memory.user)
 					else:
-						print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
+						# print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
 						self.filaGeral.append(proc)
 				else:
 					self.filaGeral.append(proc)
@@ -82,7 +82,7 @@ class Filas:
 						self.fila2.append(proc)
 						#print("Memoria usuario: ", self.memory.user)
 					else:
-						print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
+						# print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
 						self.filaGeral.append(proc)
 				else:
 					self.filaGeral.append(proc)
@@ -106,7 +106,7 @@ class Filas:
 						self.fila3.append(proc)
 						#print("Memoria usuario: ", self.memory.user)
 					else:
-						print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
+						# print("Processo ", proc.id, " não possui os recursos necessários para sua execução, retornando ele para a fila geral")
 						self.filaGeral.append(proc)
 				else:
 					self.filaGeral.append(proc)
