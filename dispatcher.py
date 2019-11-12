@@ -7,266 +7,78 @@ class Dispatcher:
     self.disc = disc      # cria um objeto de disco de acordo com o numero de blocos do disco, de segmentos ocupados e com os arquivos
     self.disc.inicializaDisco()      # inicialização do objeto disco
 
+  def executa(self, filaEscolhida):
+    while len(filaEscolhida) > 0:
+        j = 0
+        opTotal = 0
+        proc = filaEscolhida.pop(0)
+        print("dispatcher =>")
+        print("PID:", proc.id)
+        print("offset:", proc.offset)
+        print("blocks:", proc.memory)
+        print("priority:", proc.priority)
+        print("time:", proc.init)
+        print("printers:", proc.printer)
+        print("scanners:", proc.scanner)
+        print("modems:", proc.modem)
+        print("drivers:", proc.disc)
+        print("\n")
+        while(j < len(self.reader.operations)):
+          if(int(self.reader.operations[j][0]) == proc.id):
+            if (opTotal < proc.processor):
+              op = self.reader.operations[j]
+              op = op.split(',')
+              id_proc = int(op[0])
+              cod_op = int(op[1])
+              nome_arquivo = op[2]
+              nome_arquivo = nome_arquivo[1]
+              if(cod_op == 0):
+                numBlocos = int(op[3])
+                numOperacao = int(op[4])
+              else:
+                numOperacao = int(op[3])
+              while (opTotal != numOperacao):
+                opTotal += 1
+                print ("P", proc.id, "instruction ", (opTotal - 1), " - SUCESSO CPU")
+                print("\n")
+                if(opTotal >= proc.processor):
+                  opTotal += 1
+                  print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
+                  print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
+                  print("\n")
+                  print ("P", proc.id, "SIGINT")
+                  print("\n")
+                  j += 1
+                  break
+              else:  
+                opTotal += 1
+              if(cod_op == 0 and opTotal <= proc.processor):
+                self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
+              elif(cod_op == 1 and opTotal <= proc.processor):
+                self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
+            else:
+              opTotal += 1
+              print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
+              print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
+              print("\n")
+              print ("P", proc.id, "SIGINT")
+              print("\n")
+              break
+          j += 1
+        else:
+          self.filas.resources.freeResources(proc)
+          self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
+          print ("P", proc.id, "SIGINT")
+          self.filas.distribuiFilas()
+          print("\n")    
+
+
   def dispatch(self):
     while len(self.filas.filaGeral) > 0 or len(self.filas.fila1) > 0 or len(self.filas.fila2) > 0 or len(self.filas.fila3) > 0:
-      while len(self.filas.filaReal) > 0:
-        j = 0
-        opTotal = 0
-        proc = self.filas.filaReal.pop(0)
-        print("dispatcher =>")
-        print("PID:", proc.id)
-        print("offset:", proc.offset)
-        print("blocks:", proc.memory)
-        print("priority:", proc.priority)
-        print("time:", proc.init)
-        print("printers:", proc.printer)
-        print("scanners:", proc.scanner)
-        print("modems:", proc.modem)
-        print("drivers:", proc.disc)
-        print("\n")
-        while(j < len(self.reader.operations)):
-          if(int(self.reader.operations[j][0]) == proc.id):
-            if (opTotal < proc.processor):
-              op = self.reader.operations[j]
-              op = op.split(',')
-              id_proc = int(op[0])
-              cod_op = int(op[1])
-              nome_arquivo = op[2]
-              nome_arquivo = nome_arquivo[1]
-              if(cod_op == 0):
-                numBlocos = int(op[3])
-                numOperacao = int(op[4])
-              else:
-                numOperacao = int(op[3])
-              while (opTotal != numOperacao):
-                opTotal += 1
-                print ("P", proc.id, "instruction ", (opTotal - 1), " - SUCESSO CPU")
-                print("\n")
-                if(opTotal >= proc.processor):
-                  opTotal += 1
-                  print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-                  print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-                  print("\n")
-                  print ("P", proc.id, "SIGINT")
-                  print("\n")
-                  j += 1
-                  break
-              else:  
-                opTotal += 1
-              if(cod_op == 0 and opTotal <= proc.processor):
-                self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
-              elif(cod_op == 1 and opTotal <= proc.processor):
-                self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
-            else:
-              opTotal += 1
-              print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-              print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-              print("\n")
-              print ("P", proc.id, "SIGINT")
-              print("\n")
-              break
-          j += 1
-        else:
-          self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
-          print ("P", proc.id, "SIGINT")
-          self.filas.distribuiFilas()
-          print("\n")    
-      while len(self.filas.fila1) > 0:
-        j = 0
-        opTotal = 0
-        proc = self.filas.fila1.pop(0)
-        print("dispatcher =>")
-        print("PID:", proc.id)
-        print("offset:", proc.offset)
-        print("blocks:", proc.memory)
-        print("priority:", proc.priority)
-        print("time:", proc.init)
-        print("printers:", proc.printer)
-        print("scanners:", proc.scanner)
-        print("modems:", proc.modem)
-        print("drivers:", proc.disc)
-        print("\n")
-        while(j < len(self.reader.operations)):
-          if(int(self.reader.operations[j][0]) == proc.id):
-            if (opTotal < proc.processor):
-              op = self.reader.operations[j]
-              op = op.split(',')
-              id_proc = int(op[0])
-              cod_op = int(op[1])
-              nome_arquivo = op[2]
-              nome_arquivo = nome_arquivo[1]
-              if(cod_op == 0):
-                numBlocos = int(op[3])
-                numOperacao = int(op[4])
-              else:
-                numOperacao = int(op[3])
-              while (opTotal != numOperacao):
-                opTotal += 1
-                print ("P", proc.id, "instruction ", (opTotal - 1), " - SUCESSO CPU")
-                print("\n")
-                if(opTotal >= proc.processor):
-                  opTotal += 1
-                  print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-                  print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-                  print("\n")
-                  print ("P", proc.id, "SIGINT")
-                  print("\n")
-                  j += 1
-                  break
-              else:  
-                opTotal += 1
-              if(cod_op == 0 and opTotal <= proc.processor):
-                self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
-              elif(cod_op == 1 and opTotal <= proc.processor):
-                self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
-              else:
-                opTotal += 1
-                print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-                print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-                print("\n")
-                print ("P", proc.id, "SIGINT")
-                print("\n")
-                break
-          j += 1
-        else:
-          self.filas.resources.freeResources(proc)
-          self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
-          print ("P", proc.id, "SIGINT")
-          self.filas.distribuiFilas()
-          print("\n")          
-      
-      while len(self.filas.fila2) > 0:
-        j = 0
-        opTotal = 0
-        proc = self.filas.fila2.pop(0)
-        print("dispatcher =>")
-        print("PID:", proc.id)
-        print("offset:", proc.offset)
-        print("blocks:", proc.memory)
-        print("priority:", proc.priority)
-        print("time:", proc.init)
-        print("printers:", proc.printer)
-        print("scanners:", proc.scanner)
-        print("modems:", proc.modem)
-        print("drivers:", proc.disc)
-        print("\n")
-        while(j < len(self.reader.operations)):
-          if(int(self.reader.operations[j][0]) == proc.id):
-            if (opTotal < proc.processor):
-              op = self.reader.operations[j]
-              op = op.split(',')
-              id_proc = int(op[0])
-              cod_op = int(op[1])
-              nome_arquivo = op[2]
-              nome_arquivo = nome_arquivo[1]
-              if(cod_op == 0):
-                numBlocos = int(op[3])
-                numOperacao = int(op[4])
-              else:
-                numOperacao = int(op[3])
-              while (opTotal != numOperacao):
-                opTotal += 1
-                print ("P", proc.id, "instruction ", (opTotal - 1), " - SUCESSO CPU")
-                print("\n")
-                if(opTotal >= proc.processor):
-                  opTotal += 1
-                  print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-                  print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-                  print("\n")
-                  print ("P", proc.id, "SIGINT")
-                  print("\n")
-                  j += 1
-                  break
-              else:  
-                opTotal += 1
-              if(cod_op == 0 and opTotal <= proc.processor):
-                self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
-              elif(cod_op == 1 and opTotal <= proc.processor):
-                self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
-            else:
-              opTotal += 1
-              print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-              print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-              print("\n")
-              print ("P", proc.id, "SIGINT")
-              print("\n")
-              break
-          j += 1
-        else:
-          self.filas.resources.freeResources(proc)
-          self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
-          print ("P", proc.id, "SIGINT")
-          self.filas.distribuiFilas()
-          print("\n")    
-      while len(self.filas.fila3) > 0:
-        j = 0
-        opTotal = 0
-        proc = self.filas.fila3.pop(0)
-        print("dispatcher =>")
-        print("PID:", proc.id)
-        print("offset:", proc.offset)
-        print("blocks:", proc.memory)
-        print("priority:", proc.priority)
-        print("time:", proc.init)
-        print("printers:", proc.printer)
-        print("scanners:", proc.scanner)
-        print("modems:", proc.modem)
-        print("drivers:", proc.disc)
-        print("\n")
-        while(j < len(self.reader.operations)):
-          if(int(self.reader.operations[j][0]) == proc.id):
-            if (opTotal < proc.processor):
-              op = self.reader.operations[j]
-              op = op.split(',')
-              id_proc = int(op[0])
-              cod_op = int(op[1])
-              nome_arquivo = op[2]
-              nome_arquivo = nome_arquivo[1]
-              if(cod_op == 0):
-                numBlocos = int(op[3])
-                numOperacao = int(op[4])
-              else:
-                numOperacao = int(op[3])
-              while (opTotal != numOperacao):
-                opTotal += 1
-                print ("P", proc.id, "instruction ", (opTotal - 1), " - SUCESSO CPU")
-                print("\n")
-                if(opTotal >= proc.processor):
-                  opTotal += 1
-                  print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-                  print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-                  print("\n")
-                  print ("P", proc.id, "SIGINT")
-                  print("\n")
-                  j += 1
-                  break
-              else:  
-                opTotal += 1
-              if(cod_op == 0 and opTotal <= proc.processor):
-                self.exeggcuteAdd(id_proc, nome_arquivo, opTotal, numBlocos)
-              elif(cod_op == 1 and opTotal <= proc.processor):
-                self.exeggcuteDelete(id_proc, cod_op, opTotal, nome_arquivo)
-            else:
-              opTotal += 1
-              print ("P", proc.id, "instruction ", (opTotal - 1), " - FALHA")
-              print("O processo ", proc.id, " esgotou o seu tempo de CPU!")
-              print("\n")
-              print ("P", proc.id, "SIGINT")
-              print("\n")
-              break
-            if(opTotal == proc.processor):
-              self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
-              self.filas.resources.freeResources(proc)
-              print ("P", proc.id, "SIGINT")
-              self.filas.distribuiFilas()
-              print("\n")
-          j += 1
-        else:
-          self.filas.resources.freeResources(proc)
-          self.filas.memory.retiraMemoria(proc.offset, proc.memory, proc.priority)
-          print ("P", proc.id, "SIGINT")
-          self.filas.distribuiFilas()
-          print("\n")    
+      self.executa(self.filas.filaReal)
+      self.executa(self.filas.fila1)  
+      self.executa(self.filas.fila2)  
+      self.executa(self.filas.fila3)      
 
   def exeggcuteAdd(self, id_proc, nome_arquivo, opTotal, numBlocos):
     pos = self.disc.checaDisco(numBlocos)
