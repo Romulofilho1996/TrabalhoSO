@@ -17,7 +17,7 @@ class Reader:
 		self.segocup = 0			# <quantidade de segmentos ocupados no disco>
 		self.files = []				# <arquivos em disco>
 		self.operations = []		# <operações a serem efetivadas>
-		self.fila = filas           # filas de prioridade
+		self.fila = filas           # <filas de prioridade>
 
 	def readProcesses(self):
 		i = 0

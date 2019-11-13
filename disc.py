@@ -19,30 +19,30 @@ class Disc:
 
 		self.printaDisco()
 
-	def checaDisco(self, tam):
-		size = 0
-		cont = 0
-		pos = 0
-		for i in self.disc:
-			if(i == 0):
-				cont += 1
-				size += 1
-			else:
-				size = 0
-				cont += 1
-				pos = cont
-			if(size == tam):
-				return pos
+	def checaDisco(self, tam):			# checa no disco se existe espaço para adicionar o arquivo, a partir do tamanho dele
+		size = 0						# size inicial 0
+		cont = 0						# contador inicia em 0
+		pos = 0							# posicao de inicio 0
+		for i in self.disc:				# para todas as posicoes do disco
+			if(i == 0):					# se a posicao for 0
+				cont += 1				# contador incrementa
+				size += 1				# size incrementa
+			else:						# se posicao nao for 0
+				size = 0				# size retorna a 0, pois devemos buscar o proximo bloco de memoria possivel para a alocacao do arquivo
+				cont += 1				# contador continua sendo incrementado
+				pos = cont  			# posicao de inicio da alocacao do arquivo vai ser atualizada para a posicao do contador
+			if(size == tam):			# se o size for igual ao tamanho necessario para alocar o arquivo
+				return pos  			# retornamos essa posicao para fazermos a alocacao
 		return (-1)
 
-	def checaDiscoDeletar(self, nome_arq):
-		flag = 0
-		cont = 0
-		for i in self.disc:
-			if(i == nome_arq):
-				self.disc[cont] = 0
-				flag = 1
-				cont += 1
+	def checaDiscoDeletar(self, nome_arq):			# checa se existe o arquivo em disco para deletar
+		flag = 0									# flag inicia em 0
+		cont = 0									# contador inicio em 0
+		for i in self.disc:							# para todos os blocos em disco
+			if(i == nome_arq):						# se o bloco tem o nome do arquivo
+				self.disc[cont] = 0					# zeramos esse bloco
+				flag = 1							# flag vai para 1 pois arquivo foi achado no disco
+				cont += 1							# posicao vai ser atualizada
 			else:
 				cont += 1
 		if(flag == 0):
@@ -50,7 +50,7 @@ class Disc:
 		else:
 			return True
 
-	def setPosition(self, pos, nome_arq):
+	def setPosition(self, pos, nome_arq):			# atribui a posição em disco para o nome do arquivo
 		self.disc[pos] = nome_arq
 
 	def printaDisco(self):
